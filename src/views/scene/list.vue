@@ -20,7 +20,7 @@
         <el-form-item label="Station Name" label-width="120px" prop="name">
           <el-input v-model="proptionForm.name"  class="width-percent-80" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item label="Station Name" label-width="120px" prop="proportion">
+        <el-form-item label="Proportion" label-width="120px" prop="proportion">
           <el-input v-model="proptionForm.proportion" placeholder="input number" class="width-percent-80" type="number"></el-input>
         </el-form-item>
         <el-form-item label="Week Time" label-width="120px" prop="chooseWeekTime">
@@ -89,7 +89,7 @@ export default {
       }
       const params = {
         station_name:this.proptionForm.name,
-        proportion:this.proptionForm.proportion,
+        proportion:parseFloat(this.proptionForm.proportion),
         week_time:this.proptionForm.chooseWeekTime
       }
       this.POST(
@@ -97,10 +97,11 @@ export default {
         params,
         data => {
           this.$message.success('Set Proportion Suc')
+          this.cancelDialog()
           this.getList()
         },
         err => {
-          this.$message.success('Set Proportion Failed')
+          this.$message.error('Set Proportion Failed')
         }
       )
     },

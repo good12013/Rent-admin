@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <el-form ref="loginForm" :model="loginForm" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
         <h3 class="title">Rent Management</h3>
@@ -101,8 +101,15 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
+      // this.$refs.loginForm.validate(valid => {
+          if (this.loginForm.username.length==0){
+            this.$message.error('Please input email')
+            return
+          }
+          if (this.loginForm.password.length==0){
+            this.$message.error('Please input password')
+            return
+          }
           this.loading = true
           this.POST(
             '/api/admin/login',
@@ -122,10 +129,8 @@ export default {
               this.loading = false
             }
           )
-        } else {
-          return false
-        }
-      })
+
+      // })
     }
   }
 }
