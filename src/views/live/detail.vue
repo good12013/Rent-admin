@@ -22,12 +22,12 @@
     <!--<el-button type="success" @click.stop="toDetail()">新建直播</el-button>-->
     <!--</div>-->
 
-    <el-table :data="dataList" style="width: 100%;margin-top:30px;" border >
+    <el-table :data="dataList" style="width: 100%;margin-top:30px;" border  empty-text="No data available">
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
       <el-table-column align="center" label="Shop Id" prop="shop_id"></el-table-column>
-      <el-table-column align="center" label="turnover" prop="turnover"></el-table-column>
-      <el-table-column align="center" label="week_time" prop="week_time"></el-table-column>
-      <el-table-column align="center" label="created_time" prop="created_time"></el-table-column>
+      <el-table-column align="center" label="Turnover" prop="turnover"></el-table-column>
+      <el-table-column align="center" label="Week Time" prop="week_time"></el-table-column>
+      <el-table-column align="center" label="Created Time" prop="created_time"></el-table-column>
       <el-table-column align="center" label="Action" width="240px">
         <template slot-scope="scope">
 
@@ -85,6 +85,12 @@
           shop_id:info.shop_id,
           week_time:info.week_time
         }
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
         this.POST(
           '/api/admin/send_notice',
           params,
@@ -94,6 +100,11 @@
               type: 'success'
             });
             this.getList()
+            loading.close()
+          },
+          err =>{
+            this.$message.error(err.err_desc)
+            loading.close()
           }
         )
       },
@@ -144,6 +155,12 @@
       },
       //
       getList(page,size){
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
         this.GET(
           '/api/admin/shop_turnover',
           {
@@ -151,6 +168,11 @@
           },
           data => {
             this.dataList = data.ShopTurnover
+            loading.close()
+          },
+          err =>{
+            this.$message.error(err.err_desc)
+            loading.close()
           }
         )
       },

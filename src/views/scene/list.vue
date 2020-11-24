@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
 
-    <el-table :data="dataList" style="width: 100%;margin-top:30px;" border @selection-change="handleSelectionChange" v-loading="loading">
+    <el-table :data="dataList" style="width: 100%;margin-top:30px;" border @selection-change="handleSelectionChange" v-loading="loading" empty-text="No data available">
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
       <el-table-column align="center" label="ID" prop="id"></el-table-column>
       <el-table-column align="center" label="Station Name" prop="name"></el-table-column>
@@ -21,17 +21,19 @@
           <el-input v-model="proptionForm.name"  class="width-percent-80" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="Proportion" label-width="120px" prop="proportion">
-          <el-input v-model="proptionForm.proportion" placeholder="input number" class="width-percent-80" type="number"></el-input>
+          <el-input v-model="proptionForm.proportion" placeholder="input number"  type="number" class="num-input"></el-input>
         </el-form-item>
         <el-form-item label="Week Time" label-width="120px" prop="chooseWeekTime">
           <el-date-picker
             class="value-info"
-            style="width: 280px;height: 40px;margin-left: 15px;"
+            style="width: 280px;height: 40px;"
             v-model="proptionForm.chooseWeekTime"
             type="week"
             placeholder="choose a week"
-            format="yyyy-MM-dd"
-            value-format="yyyy-MM-ddT00:00:00+08:00"></el-date-picker>
+            :format="startTime"
+            value-format="yyyy-MM-dd"
+            :picker-options="pickerOption"
+            @change="changeTime"></el-date-picker>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -68,10 +70,26 @@ export default {
         name:'',
         proportion:'',
         chooseWeekTime:''
-      }
+      },
+      pickerOption:{
+        firstDayOfWeek: 1
+      },
+      startTime:''
     }
   },
   methods: {
+    changeTime(val){
+      this.startTime = this.getNextDate(val,-1)
+      this.proptionForm.chooseWeekTime = this.getNextDate(val,-1) + 'T00:00:00+08:00'
+    },
+    getNextDate(date, day) {
+      var dd = new Date(date);
+      dd.setDate(dd.getDate() + day);
+      var y = dd.getFullYear();
+      var m = dd.getMonth() + 1 < 10 ? "0" + (dd.getMonth() + 1) : dd.getMonth() + 1;
+      var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();
+      return y + "-" + m + "-" + d;
+    },
     cancelDialog(){
       this.proptionForm.name = '';
       this.proptionForm.proportion = '';
@@ -92,6 +110,12 @@ export default {
         proportion:parseFloat(this.proptionForm.proportion),
         week_time:this.proptionForm.chooseWeekTime
       }
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       this.POST(
         '/api/admin/set_station_flow_proportion',
         params,
@@ -99,9 +123,12 @@ export default {
           this.$message.success('Set Proportion Suc')
           this.cancelDialog()
           this.getList()
+          loading.close()
         },
         err => {
-          this.$message.error('Set Proportion Failed')
+          console.log("gooood",err)
+          this.$message.error(err.err_desc)
+          loading.close()
         }
       )
     },
@@ -113,6 +140,12 @@ export default {
     },
     // 获取列表数据
     getList(page,size){
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       this.GET(
         '/api/admin/station_list',
         {
@@ -121,6 +154,11 @@ export default {
         data => {
           console.log("gooooood1234")
           this.dataList = data.Stations
+          loading.close()
+        },
+        err =>{
+          this.$message.error(err.err_desc)
+          loading.close()
         }
       )
     },
@@ -200,6 +238,20 @@ export default {
 
 <style lang="scss" scoped>
 .app-container {
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  input[type="number"]{
+    -moz-appearance: textfield;
+  }
+  .class /deep/  .a input::-webkit-outer-spin-button,
+  .class /deep/  .a input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  .class /deep/  .a input[type="number"]{
+    -moz-appearance: textfield;
+  }
   .roles-table {
     margin-top: 30px;
   }

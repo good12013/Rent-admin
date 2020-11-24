@@ -22,14 +22,13 @@
         <!--<el-button type="success" @click.stop="toDetail()">新建直播</el-button>-->
     <!--</div>-->
 
-    <el-table :data="dataList" style="width: 100%;margin-top:30px;" border >
+    <el-table :data="dataList" style="width: 100%;margin-top:30px;" border empty-text="No data available">
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
       <el-table-column align="center" label="Shop Name" prop="shop_name"></el-table-column>
+      <el-table-column align="center" label="Shop Union ID" prop="shop_union_id"></el-table-column>
       <el-table-column align="center" label="Admin Email" prop="admin_email"></el-table-column>
       <el-table-column align="center" label="Admin Name" prop="admin_name"></el-table-column>
       <el-table-column align="center" label="Last Send Email Time" prop="last_send_email_time"></el-table-column>
-      <el-table-column align="center" label="Months Of Afq Rent" prop="months_of_afq_rent"></el-table-column>
-
       <el-table-column align="center" label="Rent Per Year" prop="rent_per_year"></el-table-column>
       <el-table-column align="center" label="Station Name" prop="station_name"></el-table-column>
       <el-table-column align="center" label="Created Time" prop="created_at"></el-table-column>
@@ -121,6 +120,12 @@ export default {
     },
     //
     getList(page,size){
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       this.GET(
         '/api/admin/shop_list',
         {
@@ -128,6 +133,11 @@ export default {
         },
         data => {
           this.dataList = data.Shops
+          loading.close()
+        },
+        err =>{
+          this.$message.error(err.err_desc)
+          loading.close()
         }
       )
     },

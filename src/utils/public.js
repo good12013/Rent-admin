@@ -117,7 +117,7 @@ const utils = {
               else{
                 _this.$message.error(error.response.data.err_desc);
                 if(err){
-                  err()
+                  err(error.response.data)
                 }
               }
             })
@@ -167,17 +167,18 @@ const utils = {
               if (!error || !error.response){
                 return
               }
+              // console.log("goooood",error.response)
               if(error.response.status == 401){
                 _this.$message.error(error.response.data.err_desc);
                 _this.$router.push({ path : '/' })
                 if(err){
-                  err()
+                  err(error.response.data)
                 }
               }
               else{
                 _this.$message.error(error.response.data.err_desc);
                 if(err){
-                  err()
+                  err(error.response.data)
                 }
               }
             })
