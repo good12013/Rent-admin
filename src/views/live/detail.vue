@@ -31,7 +31,7 @@
       <el-table-column align="center" label="Action" width="240px">
         <template slot-scope="scope">
 
-          <el-button size="mini" type="primary" @click.stop="sendEmail(scope.row)">Send Email</el-button>
+          <el-button v-if="scope.row.id==0" size="mini" type="primary" @click.stop="sendEmail(scope.row)">Send Email</el-button>
         </template>
       </el-table-column>
     </el-table>
