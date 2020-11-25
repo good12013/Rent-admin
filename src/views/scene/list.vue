@@ -21,7 +21,7 @@
           <el-input v-model="proptionForm.name"  class="width-percent-80" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="Proportion" label-width="120px" prop="proportion">
-          <el-input v-model="proptionForm.proportion" placeholder="input number"  type="number" class="num-input"></el-input>
+          <el-input v-model="proptionForm.proportion" placeholder="input number" class="num-input"></el-input>
         </el-form-item>
         <el-form-item label="Week Time" label-width="120px" prop="chooseWeekTime">
           <el-date-picker
@@ -78,6 +78,16 @@ export default {
     }
   },
   methods: {
+    // check(str) {
+    //   var re = /^(([1-9][0-9]*\.[0-9][0-9]*)|([0]\.[0-9][0-9]*)|([1-9][0-9]*)|([0]{1}))$
+    //   var Sure;
+    //   if (!re.test(str)){
+    //     Sure =0;
+    //   }else{
+    //     Sure =1;
+    //   }
+    //   return Sure;
+    // },
     changeTime(val){
       this.startTime = this.getNextDate(val,-1)
       this.proptionForm.chooseWeekTime = this.getNextDate(val,-1) + 'T00:00:00+08:00'
@@ -105,6 +115,9 @@ export default {
         this.$message.error('Please Choose Week Time')
         return
       }
+      // if (!this.check(this.proptionForm.proportion)){
+      //   return
+      // }
       const params = {
         station_name:this.proptionForm.name,
         proportion:parseFloat(this.proptionForm.proportion),
