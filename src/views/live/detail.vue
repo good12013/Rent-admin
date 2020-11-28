@@ -84,7 +84,7 @@
       suerSendEmail(info){
         const params = {
           shop_id:info.shop_id,
-          week_time:info.week_time
+          week_time:info.week_start
         }
         const loading = this.$loading({
           lock: true,
