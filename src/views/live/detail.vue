@@ -26,7 +26,8 @@
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
       <el-table-column align="center" label="Shop Id" prop="shop_id"></el-table-column>
       <el-table-column align="center" label="Turnover" prop="turnover"></el-table-column>
-      <el-table-column align="center" label="Week Time" prop="week_time"></el-table-column>
+      <el-table-column align="center" label="Week Start" prop="week_start"></el-table-column>
+      <el-table-column align="center" label="Next Week Start" prop="next_week_start"></el-table-column>
       <el-table-column align="center" label="Created Time" prop="created_time"></el-table-column>
       <el-table-column align="center" label="Action" width="240px">
         <template slot-scope="scope">

@@ -23,17 +23,16 @@
         <el-form-item label="Proportion" label-width="120px" prop="proportion">
           <el-input v-model="proptionForm.proportion" placeholder="input number" class="num-input"></el-input>
         </el-form-item>
-        <el-form-item label="Week Time" label-width="120px" prop="chooseWeekTime">
+        <el-form-item label="Month Time" label-width="120px" prop="chooseWeekTime">
           <el-date-picker
             class="value-info"
             style="width: 280px;height: 40px;"
             v-model="proptionForm.chooseWeekTime"
-            type="week"
-            placeholder="choose a week"
-            :format="startTime"
-            value-format="yyyy-MM-dd"
-            :picker-options="pickerOption"
-            @change="changeTime"></el-date-picker>
+            type="month"
+            placeholder="select a month"
+
+            value-format="yyyy-MM"
+            :picker-options="pickerOption"></el-date-picker>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -118,10 +117,17 @@ export default {
       // if (!this.check(this.proptionForm.proportion)){
       //   return
       // }
+      console.log(this.proptionForm.chooseWeekTime)
+      const str = this.proptionForm.chooseWeekTime
+      const year = str.match(/(\S*)-/)[1]
+      const month = str.match(/-(\S*)/)[1];
+      console.log(year)
+      console.log(month)
       const params = {
         station_name:this.proptionForm.name,
         proportion:parseFloat(this.proptionForm.proportion),
-        week_time:this.proptionForm.chooseWeekTime
+        year:parseInt(year),
+        month:parseInt(month)
       }
       const loading = this.$loading({
         lock: true,
