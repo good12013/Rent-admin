@@ -31,74 +31,40 @@ export const constantRoutes = [
     }]
   },
   {
-    path: '/scene',
+    path: '/station',
     component: Layout,
-    redirect: '/scene/list',
+    redirect: '/station/list',
     meta: { title: 'Station Manage', icon: 'international' },
     children: [
       {
         path: 'list',
         name: 'SceneList',
-        component: () => import('@/views/scene/list'),
+        component: () => import('@/views/station/list'),
         meta: { title: 'Station List',keepAlive: true}
       }
     ]
   },
   {
-    path: '/live',
+    path: '/shop',
     component: Layout,
-    redirect: '/live/list',
+    redirect: '/shop/list',
     meta: { title: 'Shop Manage', icon: 'eye-open' },
     children: [
       {
         path: 'list',
         name: 'LiveList',
-        component: () => import('@/views/live/list'),
+        component: () => import('@/views/shop/list'),
         meta: { title: 'Shop List'}
       },
       {
         path: 'detail/:id',
-        component: () => import('@/views/live/detail'),
+        component: () => import('@/views/shop/detail'),
         name: 'LiveList',
-        meta: { title: 'Shop List', activeMenu: '/live/list' },
+        meta: { title: 'Shop List', activeMenu: '/shop/list' },
         hidden: true
       }
     ]
   },
-  // {
-  //   path: '/user',
-  //   component: Layout,
-  //   redirect: '/user/list',
-  //   children: [{
-  //     path: 'list',
-  //     name: 'UserList',
-  //     component: () => import('@/views/user/list'),
-  //     meta: { title: '用户管理', icon: 'peoples' }
-  //   }]
-  // },
-  // {
-  //   path: '/permission',
-  //   component: Layout,
-  //   redirect: '/role',
-  //   children: [{
-  //     path: '/role',
-  //     name: 'Role',
-  //     component: () => import('@/views/permission/role'),
-  //     meta: { title: '权限管理', icon: 'lock' }
-  //   }]
-  // },
-  // {
-  //   path: '/keywords',
-  //   component: Layout,
-  //   redirect: '/keywords/list',
-  //   children: [{
-  //     path: '/list',
-  //     name: 'Keywords',
-  //     component: () => import('@/views/keywords/list'),
-  //     meta: { title: '标签', icon: 'search' }
-  //   }]
-  // },
-  // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
 

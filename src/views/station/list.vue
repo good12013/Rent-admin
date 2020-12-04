@@ -239,11 +239,11 @@ export default {
     // 到详情页面 val携带参数
     toDetail(val){
         val = val?val:0
-        this.$router.push({path:'/scene/detail/'+ val})
+        this.$router.push({path:'/station/detail/'+ val})
     },
     toContent(val){
         val = val?val:0
-        this.$router.push({path:'/scene/item/'+ val})
+        this.$router.push({path:'/station/item/'+ val})
     }
   },
   created(){

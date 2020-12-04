@@ -1,29 +1,7 @@
 <template>
   <div class="app-container">
-    <!--<el-form :inline="true" >-->
-    <!--<el-form-item label="直播分类">-->
-    <!--<el-select :clearable="true" v-model="classValue" placeholder="请选择">-->
-    <!--<el-option-->
-    <!--v-for="item in options"-->
-    <!--:key="item.id"-->
-    <!--:label="item.name"-->
-    <!--:value="item.id">-->
-    <!--</el-option>-->
-    <!--</el-select>-->
-    <!--</el-form-item>-->
-    <!---->
-    <!--<el-form-item>-->
-    <!--<el-button type="primary" @click.stop="search()">查询</el-button>-->
-    <!--</el-form-item>-->
-    <!--</el-form>-->
-
-    <!--<div class="btn-box">-->
-    <!--&lt;!&ndash; <el-button type="danger">批量删除</el-button> &ndash;&gt;-->
-    <!--<el-button type="success" @click.stop="toDetail()">新建直播</el-button>-->
-    <!--</div>-->
 
     <el-table :data="dataList" style="width: 100%;margin-top:30px;" border  empty-text="No data available">
-      <!-- <el-table-column type="selection" width="55"></el-table-column> -->
       <el-table-column align="center" label="Shop Id" prop="shop_id"></el-table-column>
       <el-table-column align="center" label="Turnover" prop="turnover"></el-table-column>
       <el-table-column align="center" label="Week Start" prop="week_start"></el-table-column>
@@ -36,24 +14,11 @@
         </template>
       </el-table-column>
     </el-table>
-
-    <!--<div class="pagination-box">-->
-    <!--<el-pagination-->
-    <!--@size-change="handleSizeChange"-->
-    <!--@current-change="handleCurrentChange"-->
-    <!--:current-page="page"-->
-    <!--:page-sizes="PageSizes"-->
-    <!--:page-size="PageSize"-->
-    <!--layout="total, sizes, prev, pager, next, jumper"-->
-    <!--:total="total">-->
-    <!--</el-pagination>-->
-    <!--</div>-->
   </div>
 </template>
 
 <script>
   export default {
-    name: 'LiveList',
     data() {
       return {
         dataList:[],
@@ -68,7 +33,6 @@
     },
     created(){
       this.getList()
-      // this.getClassList()
     },
     methods: {
       sendEmail(info){
@@ -109,52 +73,6 @@
           }
         )
       },
-      topItem(id){
-        this.POST(
-          '/api/v1.0/livevideos/sticky?id=' + id,
-          {},
-          data => {
-            this.$message({
-              message: '置顶成功',
-              type: 'success'
-            });
-            this.getList(this.page,this.size)
-          }
-        )
-      },
-      delItem(id){
-        this.$confirm('是否确认删除?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.DELETE(
-            '/api/v1.0/livevideos/single',
-            {id:id},
-            data => {
-              this.getList(this.page,this.size)
-            }
-          )
-        })
-      },
-      search(){
-        this.classId = this.classValue
-        this.page = 1
-        this.getList()
-      },
-      // 获取分类
-      getClassList() {
-        this.GET(
-          '/api/v1.0/categories',
-          {
-            section : "live"
-          },
-          res => {
-            this.options = res.data
-          }
-        )
-      },
-      //
       getList(page,size){
         const loading = this.$loading({
           lock: true,
@@ -176,23 +94,6 @@
             loading.close()
           }
         )
-      },
-      // 每页数量改变
-      handleSizeChange(val) {
-        this.size = val
-        this.page = 1
-        this.getList(this.page,this.size)
-      },
-      // 当前页面改变
-      handleCurrentChange(val) {
-        this.page = val
-      },
-      toEnroll(val){
-        this.$router.push({path:'/live/liveproduct/' + val})
-      },
-      toDetail(val){
-        val = val?val:0
-        this.$router.push({path:'/live/detail/'+ val})
       }
     }
   }
