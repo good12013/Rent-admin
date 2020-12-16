@@ -105,11 +105,24 @@ export default {
       this.proptionForm.chooseWeekTime = '';
       this.proptionForm.show = false;
     },
+    checkNum(str){
+      var reg = /^(([1-9][0-9]*\.[0-9][0-9]*)|([0]\.[0-9][0-9]*)|([1-9][0-9]*)|([0]{1}))$/;
+      return reg.test(str)
+    },
     saveForm(){
       if (this.proptionForm.proportion.length==0){
         this.$message.error('Please input Proportion')
         return
       }
+      if (!this.checkNum(this.proptionForm.proportion)){
+        this.$message.error('Please input correct proportion')
+        return
+      }
+      if (parseFloat(this.proptionForm.proportion) > 1){
+        this.$message.error('Please input correct proportion')
+        return
+      }
+
       if (this.proptionForm.chooseWeekTime.length==0){
         this.$message.error('Please Choose Week Time')
         return

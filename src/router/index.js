@@ -57,7 +57,7 @@ export const constantRoutes = [
         meta: { title: 'Shop List'}
       },
       {
-        path: 'detail/:id',
+        path: 'detail',
         component: () => import('@/views/shop/detail'),
         name: 'LiveList',
         meta: { title: 'Shop List', activeMenu: '/shop/list' },
