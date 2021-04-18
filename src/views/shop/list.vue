@@ -5,6 +5,13 @@
       <el-table-column align="center" label="Shop Union ID" prop="shop_union_id"></el-table-column>
       <el-table-column align="center" label="Admin Email" prop="admin_email"></el-table-column>
       <el-table-column align="center" label="Admin Name" prop="admin_name"></el-table-column>
+      <el-table-column align="center" label="Trading Status" prop="trading_status">
+        <template slot-scope="scope">
+          <div>{{scope.row.trading_status==0?'-':scope.row.trading_status==1?'Trading Started':'No Trading Started'}}</div>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="Start Trading Time" prop="start_trading_time">
+      </el-table-column>
       <el-table-column align="center" label="Last Send Email Time" prop="last_send_email_time"></el-table-column>
       <el-table-column align="center" label="Rent Per Year" prop="rent_per_year"></el-table-column>
       <el-table-column align="center" label="Station Name" prop="station_name"></el-table-column>
