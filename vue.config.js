@@ -32,7 +32,7 @@ module.exports = {
   devServer: {
     proxy: {
         '/api': {
-            target: 'http://rent.51qudian.cn',
+            target: 'https://gtr-tenants.transreport.co.uk',
             changeOrigin: true,
             ws: true,
             pathRewrite: {
