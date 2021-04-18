@@ -83,7 +83,7 @@ const utils = {
          * @param err 失败回调
          */
         GET(url,params,success,err){
-            url = process.env.VUE_APP_BASE_API + url
+            // url = process.env.VUE_APP_BASE_API + url
             var _this = this
             params = params?params:{}
             axios.get(
@@ -131,7 +131,7 @@ const utils = {
          * @param err 失败回调
          */
         POST(url,params,success,err){
-            url = process.env.VUE_APP_BASE_API + url
+            // url = process.env.VUE_APP_BASE_API + url
             let _this = this
             // let obj = new FormData();
             // for(let key in params){
